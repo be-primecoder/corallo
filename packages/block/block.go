@@ -27,10 +27,22 @@ import (
   "gitub.com/pkg/errors"
   log "github.com/sirupsen/logrus"
   
-  var (
-    ErrIncorrectRoobackHash = errors.New("Rollback hash doesn't match")
-    ErrEmptyBlock           = errors.New("Block doesn't contain transactions")
-    
-    errTxAttempts = "The limit of attempts has been reached"
-    
-    
+var (
+  ErrIncorrectRoobackHash = errors.New("Rollback hash doesn't match")
+  ErrEmptyBlock           = errors.New("Block doesn't contain transactions")
+
+  errTxAttempts = "The limit of attempts has been reached"
+
+// Structure of a block storing block data
+type Block struct {
+  Header            utils.BlockData
+  PrevHeader        *utils.BlockData
+  PrevRollbacksHash []byte
+  MrklRoot          []byte
+  BinData           []byte
+  Transactions      []*transaction.Transaction
+  SysUpdate         bool
+  GenBlock          bool
+  Notification      []types.Notificaton
+}
+   
